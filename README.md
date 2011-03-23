@@ -1,4 +1,4 @@
-#node-kahana
+#node-clearsilver
 
 ClearSilver template engine bindings for node.js
 
