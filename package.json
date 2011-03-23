@@ -1,0 +1,40 @@
+{
+    "name" : "ClearSilver",
+    "keywords": [
+        "template engine",
+        "ClearSilver" 
+    ],
+    "description": "ClearSilver template engine bindings for node.js",
+    "homepage": "http://github.com/mah0x211/node-clearsilver",
+    "version" : "0.5.0",
+    "license" : [
+        {
+            "type": "BSD" 
+        } 
+    ],
+    "main" : "./lib/ClearSilver",
+    "directories" : {
+        "lib" : "./lib" 
+    },
+    "scripts" : {
+        "install" : "./install.sh" 
+    },
+    "engines" : {
+        "node" : ">= 0.3.7" 
+    },
+    "maintainers": [
+        {
+            "name": "Masatoshi Teruya",
+            "email": "mah0x211@gmail",
+            "web": "http://kontext.jp/" 
+        } 
+    ],
+    "repository": {
+        "type" : "git",
+        "url": "http://github.com/mah0x211/node-clearsilver.git" 
+    },
+    "bugs" : {
+        "mail" : "" ,
+        "web" : "http://github.com/mah0x211/node-clearsilver/issues" 
+    }
+}
