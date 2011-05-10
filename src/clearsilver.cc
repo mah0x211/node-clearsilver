@@ -67,19 +67,19 @@ NEOERR *ClearSilver::hookFileload( void *ctx, HDF *hdf, const char *filepath, ch
 	Handle<Value> argv[1] = { String::New( filepath ) };
 	Handle<Value> retval = cs->resolver->Call( Context::GetCurrent()->Global(), 1, argv );
 	
-	if( retval->IsNull() ){
+	if( !retval->IsString() ){
 		asprintf( inject, "[include] failed to include: %s", filepath );
 	}
 	else
 	{
 		// no need to free
-		const char *filepath_resolve = *String::Utf8Value( retval );
-		char *ext = rindex( filepath_resolve, '.' );
+		String::Utf8Value filepath_resolve( retval->ToString() );
+		char *ext = rindex( *filepath_resolve, '.' );
 		char *estr = NULL;
 		
 		if( strcmp( ext, ".hdf" ) == 0 )
 		{
-			if( ( estr = CHECK_NEOERR( hdf_read_file( hdf, filepath_resolve ) ) ) ){
+			if( ( estr = CHECK_NEOERR( hdf_read_file( hdf, *filepath_resolve ) ) ) ){
 				asprintf( inject, "[include] failed to include %s: %s\n", filepath, estr );
 				free( estr );
 			}
@@ -87,7 +87,7 @@ NEOERR *ClearSilver::hookFileload( void *ctx, HDF *hdf, const char *filepath, ch
 				asprintf( inject, "" );
 			}
 		}
-		else if( ( estr = CHECK_NEOERR( ne_load_file( filepath_resolve, inject ) ) ) ){
+		else if( ( estr = CHECK_NEOERR( ne_load_file( *filepath_resolve, inject ) ) ) ){
 			asprintf( inject, "[include] failed to include %s: %s\n", filepath, estr );
 			free( estr );
 		}
