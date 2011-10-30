@@ -39,10 +39,10 @@ def configure(conf):
 	o = Options.options
 	
 	if o.clearsilver_includes:
-		conf.env.append_value("CPPFLAGS", '-I%s' % o.clearsilver_includes)
+	    conf.env.append_value("CPPFLAGS", '-I%s' % o.clearsilver_includes)
 	
 	if o.clearsilver:
-		conf.env.append_value("LINKFLAGS", '-L%s' % o.clearsilver)
+	    conf.env.append_value("LINKFLAGS", '-L%s' % o.clearsilver)
 	
 	# print conf.env
 	
