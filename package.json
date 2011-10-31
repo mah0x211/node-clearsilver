@@ -6,7 +6,7 @@
     ],
     "description": "ClearSilver template engine bindings for node.js",
     "homepage": "http://github.com/mah0x211/node-clearsilver",
-    "version" : "0.5.2",
+    "version" : "0.5.3",
     "licenses" : [
         {
             "type": "MIT" 
