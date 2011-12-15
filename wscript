@@ -44,20 +44,21 @@ def configure(conf):
 	if o.clearsilver:
 	    conf.env.append_value("LINKFLAGS", '-L%s' % o.clearsilver)
 	
-	# print conf.env
+	print conf.env
 	
 	# check ClearSilver libs
 	conf.check_cc( lib='neo_cs', mandatory=True )
 	conf.check_cc( lib='neo_utl', mandatory=True )
 	conf.check_cc( lib='neo_cgi', mandatory=True )
+	conf.check_cc( lib='pthread', mandatory=True )
 
 def build(bld):
-	print 'build'
-	obj = bld.new_task_gen('cxx', 'shlib', 'node_addon')
-	obj.target = 'clearsilver_binding'
-	obj.source = './src/clearsilver.cc'
-	obj.includes = ['.']
-	obj.lib = ['neo_cs','neo_cgi','neo_utl']
+	# print 'build'
+	t = bld.new_task_gen('cxx', 'shlib', 'node_addon')
+	t.target = 'clearsilver'
+	t.source = './src/clearsilver.cc'
+	t.includes = ['.']
+	t.lib = ['neo_cs','neo_cgi','neo_utl','pthread']
 
 def shutdown(ctx):
 	pass

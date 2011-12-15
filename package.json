@@ -6,13 +6,13 @@
     ],
     "description": "ClearSilver template engine bindings for node.js",
     "homepage": "http://github.com/mah0x211/node-clearsilver",
-    "version" : "0.5.3",
+    "version" : "0.6.0",
     "licenses" : [
         {
-            "type": "MIT" 
+            "type": "BSD" 
         } 
     ],
-    "main" : "./lib/ClearSilver",
+    "main" : "./index.js",
     "directories" : {
         "lib" : "./lib" 
     },

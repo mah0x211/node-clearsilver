@@ -1,39 +1,51 @@
 #!/bin/sh
 
-CSLIBS=./cslibs
-SHPLIB=streamhtmlparser-0.1.tar.gz
+CWD=`pwd`
+SHPLIB='streamhtmlparser-0.1.tar.gz'
+DEPEND="$CWD/depend"
+CSLIBS='./cslibs'
+CONF="--prefix=$DEPEND --disable-apache --disable-python --disable-perl --disable-ruby --disable-java --disable-csharp --with-streamhtmlparser=./streamhtmlparser-0.1"
 
-if [ -d $CSLIBS ]; then 
-    rm -Rf $CSLIBS
+if [ ! -d $CSLIBS ]; then
+    echo "svn checkout http://clearsilver.googlecode.com/svn/trunk/ $CSLIBS"
+    svn checkout http://clearsilver.googlecode.com/svn/trunk/ $CSLIBS
+    if [ ! -d $CSLIBS ]; then 
+        exit -1
+    fi
 fi
-echo "svn checkout http://clearsilver.googlecode.com/svn/trunk/ $CSLIBS"
-svn checkout http://clearsilver.googlecode.com/svn/trunk/ $CSLIBS
 
 echo "cd $CSLIBS"
 cd $CSLIBS
 
-CSLIBS=`pwd`
-echo 'mkdir ./libs'
-mkdir ./libs
+if [ ! -d ./libs ]; then
+    echo 'mkdir ./libs'
+    mkdir ./libs
+fi
 
-echo 'wget http://streamhtmlparser.googlecode.com/files/streamhtmlparser-0.1.tar.gz'
-wget http://streamhtmlparser.googlecode.com/files/streamhtmlparser-0.1.tar.gz
+if [ ! -d 'streamhtmlparser-0.1' ]; then
+    echo "wget http://streamhtmlparser.googlecode.com/files/$SHPLIB"
+    wget http://streamhtmlparser.googlecode.com/files/$SHPLIB
+    if [ ! -f $SHPLIB ]; then
+        exit -1;
+    else
+        echo "tar xvzf $SHPLIB"
+        tar xvzf $SHPLIB
+        rm $SHPLIB
+    fi
+fi
 
-echo 'tar xvzf streamhtmlparser-0.1.tar.gz'
-tar xvzf streamhtmlparser-0.1.tar.gz
+srcdir=`dirname $0`
+test -z "$srcdir" && srcdir=.
+aclocal -I m4
+autoheader
+autoconf
+echo "./configure $CONF"
+./configure $CONF
 
-echo 'mv ./streamhtmlparser-0.1 ./streamhtmlparser'
-mv ./streamhtmlparser-0.1 ./streamhtmlparser
+echo "make depend && make && make man && make install"
+make man && make depend && make install
+echo "cd $CWD"
+cd $CWD
 
-echo './autogen.sh'
-./autogen.sh
-
-echo "./configure --prefix=$CSLIBS --disable-apache --disable-python --disable-perl --disable-ruby --disable-java --disable-csharp"
-./configure --prefix=$CSLIBS --disable-apache --disable-python --disable-perl --disable-ruby --disable-java --disable-csharp
-make depend && make && make man && make install
-echo 'cd ../'
-cd ../
-
-CSLIBS=`pwd`
-node-waf configure --clearsilver=$CSLIBS/cslibs/lib --clearsilver-includes=$CSLIBS/cslibs/include
+node-waf configure --clearsilver=$DEPEND/lib --clearsilver-includes=$DEPEND/include
 node-waf build
