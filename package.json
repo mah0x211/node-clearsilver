@@ -6,7 +6,7 @@
     ],
     "description": "ClearSilver template engine bindings for node.js",
     "homepage": "http://github.com/mah0x211/node-clearsilver",
-    "version" : "0.6.0",
+    "version" : "0.6.1",
     "licenses" : [
         {
             "type": "BSD" 
@@ -26,7 +26,7 @@
         {
             "name": "Masatoshi Teruya",
             "email": "mah0x211@gmail",
-            "web": "http://kontext.jp/" 
+            "url": "http://kontext.jp/" 
         } 
     ],
     "repository": {

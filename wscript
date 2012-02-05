@@ -13,19 +13,11 @@ def set_options(opt):
 	opt.tool_options('compiler_cc')
 	opt.tool_options('misc')
 	
-	opt.add_option( '--clearsilver-includes'
-		, action='store'
-		, type='string'
-		, default=False
-		, help='Directory containing libev header files'
-		, dest='clearsilver_includes'
-		)
-	
 	opt.add_option( '--clearsilver'
 		, action='store'
 		, type='string'
 		, default=False
-		, help='Link to a shared clearsilver libraries'
+		, help='clearsilver install'
 		, dest='clearsilver'
 		)
 
@@ -37,14 +29,13 @@ def configure(conf):
 	conf.check_tool('node_addon')
 	
 	o = Options.options
-	
-	if o.clearsilver_includes:
-	    conf.env.append_value("CPPFLAGS", '-I%s' % o.clearsilver_includes)
-	
+
 	if o.clearsilver:
-	    conf.env.append_value("LINKFLAGS", '-L%s' % o.clearsilver)
+	    conf.env.append_value("CPPFLAGS", '-I%s/include' % o.clearsilver)
+	    conf.env.append_value("CPPFLAGS", '-I%s/include/ClearSilver' % o.clearsilver)
+	    conf.env.append_value("LINKFLAGS", '-L%s/lib' % o.clearsilver)
 	
-	print conf.env
+	# print conf.env
 	
 	# check ClearSilver libs
 	conf.check_cc( lib='neo_cs', mandatory=True )
@@ -55,7 +46,7 @@ def configure(conf):
 def build(bld):
 	# print 'build'
 	t = bld.new_task_gen('cxx', 'shlib', 'node_addon')
-	t.target = 'clearsilver'
+	t.target = 'ClearSilver'
 	t.source = './src/clearsilver.cc'
 	t.includes = ['.']
 	t.lib = ['neo_cs','neo_cgi','neo_utl','pthread']

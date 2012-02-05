@@ -1,5 +1,6 @@
 #!/bin/sh
 
+set -e
 CWD=`pwd`
 SHPLIB='streamhtmlparser-0.1.tar.gz'
 DEPEND="$CWD/depend"
@@ -28,8 +29,8 @@ if [ ! -d 'streamhtmlparser-0.1' ]; then
     if [ ! -f $SHPLIB ]; then
         exit -1;
     else
-        echo "tar xvzf $SHPLIB"
-        tar xvzf $SHPLIB
+        echo "tar xzf $SHPLIB"
+        tar xzf $SHPLIB
         rm $SHPLIB
     fi
 fi
@@ -47,5 +48,5 @@ make man && make depend && make install
 echo "cd $CWD"
 cd $CWD
 
-node-waf configure --clearsilver=$DEPEND/lib --clearsilver-includes=$DEPEND/include
+node-waf configure --clearsilver=$DEPEND
 node-waf build

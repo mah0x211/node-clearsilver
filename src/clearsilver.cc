@@ -1355,5 +1355,5 @@ extern "C" {
         HandleScope scope;
         ClearSilver::Initialize( target );
     }
-    NODE_MODULE( clearsilver, init );
+    NODE_MODULE( ClearSilver, init );
 };
