@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/mah0x211/node-clearsilver.png)](http://travis-ci.org/mah0x211/node-clearsilver)
 #node-clearsilver
 
 ClearSilver template engine bindings for node.js
